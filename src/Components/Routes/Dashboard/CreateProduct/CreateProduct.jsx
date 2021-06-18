@@ -7,6 +7,7 @@ import Container from "../Container";
 import Form from "./Components/Form";
 import Toast from "Components/Toast";
 import { Progress } from "Components/Progress";
+import useGetAPI from "Hooks/useGetAPI";
 
 const allowedTypes = ["image/jpeg", "image/png"];
 
@@ -64,7 +65,22 @@ function CreateProducts() {
     },
   });
 
+  const [categoryResponse, getCategoriesFromAPI] = useGetAPI({
+    url: "/category",
+    headers: {},
+  });
+
   const { isLoading, success, error } = response;
+  const {
+    data: getCategoriesData,
+    success: getCategorySuccess,
+    error: getCategoryError,
+    isLoading: getCategoryPending,
+  } = categoryResponse;
+
+  useEffect(() => {
+    getCategoriesFromAPI();
+  }, []);
 
   const handleCreateProduct = (product) => {
     const formData = new FormData();
@@ -79,6 +95,7 @@ function CreateProducts() {
     formData.append("price", product.price);
     formData.append("discountedPrice", product.discountedPrice);
     formData.append("count", product.count);
+    formData.append("category", product.category);
 
     postAPI(formData);
   };
@@ -105,9 +122,13 @@ function CreateProducts() {
           price: 1000,
           discountedPrice: 0,
           count: 1,
+          category: "",
         }}
         thumbnailPreview={null}
         galleryPreview={[]}
+        categories={
+          getCategoriesData?.categories ? getCategoriesData?.categories : []
+        }
       />
     </Container>
   );

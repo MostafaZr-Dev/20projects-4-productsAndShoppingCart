@@ -6,6 +6,9 @@ import {
   FormHelperText,
   Box,
   Button,
+  FormControl,
+  Select,
+  MenuItem,
 } from "@material-ui/core";
 import { Formik } from "formik";
 
@@ -19,6 +22,7 @@ function Form({
   initialValues,
   thumbnailPreview,
   galleryPreview,
+  categories,
 }) {
   const [thumbnail, setThumbnail] = useState(thumbnailPreview);
   // const [gallery, setGallery] = useState(galleryPreview);
@@ -161,6 +165,28 @@ function Form({
               fullWidth
               InputProps={{ inputProps: { min: 1 } }}
             />
+          </Grid>
+          <Grid item xs={12} sm={12} md={6} lg={6}>
+            <FormControl variant="outlined" fullWidth>
+              <InputLabel id="demo-simple-select-outlined-label">
+                انتخاب دسته بندی
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={values.category}
+                onChange={(e) => {
+                  setFieldValue("category", e.target.value);
+                }}
+                label="انتخاب دسته بندی"
+              >
+                {categories.map((item) => (
+                  <MenuItem key={item._id} value={item._id}>
+                    {item.title}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <StyledFormControl fullWidth>

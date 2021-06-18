@@ -23,6 +23,16 @@ const routes = [
         exact: true,
         component: DashboardComponents.EditProduct,
       },
+      {
+        path: "/category",
+        exact: true,
+        component: DashboardComponents.Category,
+      },
+      {
+        path: "/category/create",
+        exact: true,
+        component: DashboardComponents.CreateCategory,
+      },
     ],
   },
 ];

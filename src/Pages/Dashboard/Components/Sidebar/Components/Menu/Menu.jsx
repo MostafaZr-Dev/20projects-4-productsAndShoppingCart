@@ -1,12 +1,16 @@
 import { useState } from "react";
-import { AddBox, ListAlt, Storefront } from "@material-ui/icons";
+import { AddBox, Category, ListAlt, Storefront } from "@material-ui/icons";
+import { useLocation } from "react-router-dom";
 
 import { Wrapper, SubMenuWrapper, StyledRouteLink } from "./MenuStyles";
 import MenuItem from "./MenuItem";
 import SubItem from "./SubItem";
 
 function Menu() {
-  const [current, setCurrent] = useState(0);
+
+  const { pathname } = useLocation();
+
+  const [current, setCurrent] = useState(pathname);
 
   const handleChange = (index) => {
     setCurrent(index);
@@ -17,9 +21,9 @@ function Menu() {
       <MenuItem
         icon={<Storefront />}
         title="محصولات"
-        open={current === 0}
+        open={current.includes("products")}
         onChange={(e) => {
-          handleChange(0);
+          handleChange("/dashboard/products");
         }}
       >
         <SubMenuWrapper component="div">
@@ -36,6 +40,31 @@ function Menu() {
             activeClassName="active-item"
           >
             <SubItem title="لیست محصولات" icon={<ListAlt />} />
+          </StyledRouteLink>
+        </SubMenuWrapper>
+      </MenuItem>
+      <MenuItem
+        icon={<Category />}
+        title="دسته بندی ها"
+        open={current.includes("category")}
+        onChange={(e) => {
+          handleChange("/dashboard/category");
+        }}
+      >
+        <SubMenuWrapper component="div">
+          <StyledRouteLink
+            exact
+            to="/dashboard/category/create"
+            activeClassName="active-item"
+          >
+            <SubItem title="ایجاد دسته بندی" icon={<AddBox />} />
+          </StyledRouteLink>
+          <StyledRouteLink
+            exact
+            to="/dashboard/category"
+            activeClassName="active-item"
+          >
+            <SubItem title="لیست دسته بندی ها" icon={<ListAlt />} />
           </StyledRouteLink>
         </SubMenuWrapper>
       </MenuItem>

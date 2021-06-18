@@ -65,7 +65,7 @@ function Products() {
   const DeleteProduct = (e) => {
     deleteProductAPI();
   };
-  console.log(data?.products)
+  
   return (
     <Container title="لیست محصولات">
       <Toast
