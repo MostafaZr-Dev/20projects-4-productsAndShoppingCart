@@ -33,6 +33,11 @@ const routes = [
         exact: true,
         component: DashboardComponents.CreateCategory,
       },
+      {
+        path: "/orders",
+        exact: true,
+        component: DashboardComponents.Orders,
+      },
     ],
   },
 ];
